@@ -125,7 +125,7 @@ module Bundler
 
           git(*["fetch", "--force", "--quiet", *extra_fetch_args, path.to_s, revision_refspec].compact, :dir => destination)
 
-          git "reset", "--hard", @revision, :dir => destination
+          git "reset", "--hard", revision, :dir => destination
 
           if submodules
             git_retry "submodule", "update", "--init", "--recursive", :dir => destination

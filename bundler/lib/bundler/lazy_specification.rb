@@ -10,12 +10,14 @@ module Bundler
 
     attr_reader :name, :version, :platform
     attr_writer :force_ruby_platform
-    attr_accessor :source, :remote, :dependencies
+    attr_accessor :source, :remote, :dependencies, :required_ruby_version, :required_rubygems_version
 
     def initialize(name, version, platform, source = nil)
       @name          = name
       @version       = version
       @dependencies  = []
+      @required_ruby_version = Gem::Requirement.default
+      @required_rubygems_version = Gem::Requirement.default
       @platform      = platform || Gem::Platform::RUBY
       @source        = source
       @specification = nil

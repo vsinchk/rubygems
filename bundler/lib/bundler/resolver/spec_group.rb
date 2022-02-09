@@ -37,6 +37,8 @@ module Bundler
             lazy_spec = LazySpecification.new(name, version, s.platform, source)
             lazy_spec.force_ruby_platform = force_ruby_platform
             lazy_spec.dependencies = s.dependencies
+            lazy_spec.required_ruby_version = s.required_ruby_version
+            lazy_spec.required_rubygems_version = s.required_rubygems_version
             lazy_spec
           end
         end.flatten.compact.uniq
@@ -96,7 +98,6 @@ module Bundler
 
       def metadata_dependencies(platform)
         spec = @specs[platform].first
-        return [] if spec.is_a?(LazySpecification)
         dependencies = []
         unless spec.required_ruby_version.none?
           dependencies << DepProxy.get_proxy(Dependency.new("Ruby\0", spec.required_ruby_version), platform)

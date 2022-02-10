@@ -149,8 +149,8 @@ module Spec
             next "#{name} was expected to be at version #{version} but was #{actual_version}"
           end
           if exitstatus == 65
-            actual_platform = out.split("\n").last
-            next "#{name} was expected to be of platform #{platform} but was #{actual_platform}"
+            actual_platform = out.split("\n").last || Gem::Platform::RUBY
+            next "#{name} was expected to have platform #{platform} but was #{actual_platform}"
           end
           if exitstatus == 66
             actual_source = out.split("\n").last

@@ -283,8 +283,14 @@ module Bundler
         # Run a resolve against the locally available gems
         Bundler.ui.debug("Found changes from the lockfile, re-resolving dependencies because #{change_reason}")
         expanded_dependencies = expand_dependencies(dependencies + metadata_dependencies, true)
-        Resolver.resolve(expanded_dependencies, source_requirements, last_resolve, gem_version_promoter, additional_base_requirements_for_resolve, platforms)
+        result = Resolver.resolve(expanded_dependencies, source_requirements, last_resolve, gem_version_promoter, additional_base_requirements_for_resolve, platforms)
+        @platforms << Gem::Platform::LINUX if try_add_linux_resolution? && result.with_linux!
+        result
       end
+    end
+
+    def try_add_linux_resolution?
+      @locked_gems.nil? && ![Gem::Platform::RUBY, Gem::Platform::LINUX].include?(local_platform) && generic_local_platform_is_ruby?
     end
 
     def spec_git_paths
@@ -511,7 +517,7 @@ module Bundler
     end
 
     def current_ruby_platform_locked?
-      return false unless generic_local_platform == Gem::Platform::RUBY
+      return false unless generic_local_platform_is_ruby?
       return false if Bundler.settings[:force_ruby_platform] && !@platforms.include?(Gem::Platform::RUBY)
 
       current_platform_locked?

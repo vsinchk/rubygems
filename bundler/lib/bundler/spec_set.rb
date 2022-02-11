@@ -47,6 +47,22 @@ module Bundler
       check ? true : specs
     end
 
+    def with_linux!
+      new_specs = []
+
+      @specs.each do |spec|
+        matching_specs = spec.source.specs.search(Gem::Dependency.new(spec.name, spec.version))
+        linux_spec = GemHelpers.select_best_platform_match(matching_specs, Gem::Platform::LINUX).first
+        return nil unless linux_spec
+
+        new_specs << LazySpecification.from_spec(linux_spec)
+      end
+
+      @specs.concat(new_specs.uniq)
+
+      self
+    end
+
     def [](key)
       key = key.name if key.respond_to?(:name)
       lookup[key].reverse

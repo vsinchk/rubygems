@@ -30,6 +30,11 @@ module Bundler
     end
     module_function :generic_local_platform
 
+    def generic_local_platform_is_ruby?
+      generic_local_platform == Gem::Platform::RUBY
+    end
+    module_function :generic_local_platform_is_ruby?
+
     def local_platform
       Bundler.local_platform
     end

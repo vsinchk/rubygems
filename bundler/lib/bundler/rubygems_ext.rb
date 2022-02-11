@@ -217,6 +217,7 @@ module Gem
 
   class Platform
     JAVA  = Gem::Platform.new("java")
+    LINUX = Gem::Platform.new("x86_64-linux")
     MSWIN = Gem::Platform.new("mswin32")
     MSWIN64 = Gem::Platform.new("mswin64")
     MINGW = Gem::Platform.new("x86-mingw32")

@@ -88,7 +88,13 @@ module Spec
     end
 
     def lockfile_platforms(*extra)
-      [specific_local_platform, *extra].map(&:to_s).sort.join("\n  ")
+      platforms = [specific_local_platform] + extra
+      platforms << linux if generic_local_platform == Gem::Platform::RUBY
+      formatted_lockfile_platforms(*platforms.uniq)
+    end
+
+    def formatted_lockfile_platforms(*platforms)
+      platforms.map(&:to_s).sort.join("\n  ")
     end
   end
 end

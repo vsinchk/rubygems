@@ -421,6 +421,29 @@ RSpec.describe "bundle update" do
     before do
       build_repo2
 
+      lockfile <<~L
+        GEM
+          remote: #{file_uri_for(gem_repo2)}
+          specs:
+            activesupport (2.3.5)
+            platform_specific (1.0)
+            platform_specific (1.0-#{specific_local_platform})
+            rack (1.0.0)
+            rack-obama (1.0)
+              rack
+
+        PLATFORMS
+          #{specific_local_platform}
+
+        DEPENDENCIES
+          activesupport
+          platform_specific
+          rack-obama
+
+        BUNDLED WITH
+           #{Bundler::VERSION}
+      L
+
       install_gemfile <<-G
         source "#{file_uri_for(gem_repo2)}"
         gem "activesupport"

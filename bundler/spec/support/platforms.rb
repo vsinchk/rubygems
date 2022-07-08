@@ -40,10 +40,6 @@ module Spec
       [rb, java, linux, mswin, mingw, x64_mingw]
     end
 
-    def local
-      generic_local_platform
-    end
-
     def specific_local_platform
       Bundler.local_platform
     end

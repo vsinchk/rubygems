@@ -29,6 +29,20 @@ module Gem
     self.sources = [ENV["BUNDLER_SPEC_GEM_SOURCES"]]
   end
 
+  if ENV["BUNDLER_SPEC_READ_ONLY"]
+    module ReadOnly
+      def open(file, mode)
+        if file != IO::NULL && mode == "wb"
+          raise Errno::EROFS
+        else
+          super
+        end
+      end
+    end
+
+    File.singleton_class.prepend ReadOnly
+  end
+
   # We only need this hack for rubygems versions without the BundlerVersionFinder
   if Gem.rubygems_version < Gem::Version.new("2.7.0")
     @path_to_default_spec_map.delete_if do |_path, spec|

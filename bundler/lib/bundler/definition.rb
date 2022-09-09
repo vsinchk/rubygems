@@ -319,8 +319,14 @@ module Bundler
 
       return if file && File.exist?(file) && lockfiles_equal?(@lockfile_contents, contents, preserve_unknown_sections)
 
-      SharedHelpers.filesystem_access(file) do |p|
-        File.open(p, "wb") {|f| f.puts(contents) }
+      begin
+        SharedHelpers.filesystem_access(file) do |p|
+          File.open(p, "wb") {|f| f.puts(contents) }
+        end
+      rescue Errno::EROFS
+        validate_platforms!
+
+        raise
       end
     end
 

@@ -319,11 +319,6 @@ module Bundler
 
       return if file && File.exist?(file) && lockfiles_equal?(@lockfile_contents, contents, preserve_unknown_sections)
 
-      if Bundler.frozen_bundle?
-        Bundler.ui.error "Cannot write a changed lockfile while frozen."
-        return
-      end
-
       SharedHelpers.filesystem_access(file) do |p|
         File.open(p, "wb") {|f| f.puts(contents) }
       end

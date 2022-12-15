@@ -49,9 +49,9 @@ install:
 
     results = results.join("\n").b
 
-    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} clean$},   results
-    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']}$},         results
-    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} install$}, results
+    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} sitearchdir\\=#{@dest_path} sitelibdir\\=#{@dest_path} clean$}, results
+    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} sitearchdir\\=#{@dest_path} sitelibdir\\=#{@dest_path}$}, results
+    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} sitearchdir\\=#{@dest_path} sitelibdir\\=#{@dest_path} install$}, results
 
     if /nmake/ !~ results
       assert_match %r{^clean: destination$},   results
@@ -78,9 +78,9 @@ install:
 
     results = results.join("\n").b
 
-    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} clean$},   results
-    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']}$},         results
-    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} install$}, results
+    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} sitearchdir\\=#{@dest_path} sitelibdir\\=#{@dest_path} clean$}, results
+    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} sitearchdir\\=#{@dest_path} sitelibdir\\=#{@dest_path}$}, results
+    assert_match %r{DESTDIR\\=#{ENV['DESTDIR']} sitearchdir\\=#{@dest_path} sitelibdir\\=#{@dest_path} install$}, results
   end
 
   def test_custom_make_with_options

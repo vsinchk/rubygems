@@ -202,7 +202,7 @@ module Bundler
 
         version = Gem::Version.new(version)
         platform = platform ? Gem::Platform.new(platform) : Gem::Platform::RUBY
-        checksum = Bundler::Checksum.new(name, version, platform, checksum)
+        checksum = Bundler::Checksum.new(name, version, platform, [checksum])
         @checksums[checksum.full_name] = checksum
       end
     end

@@ -13,6 +13,7 @@ class TestGemCommandsInstallCommand < Gem::TestCase
 
     @cmd = Gem::Commands::InstallCommand.new
     @cmd.options[:document] = []
+    @cmd.options[:conservative] = false
 
     @gemdeps = "tmp_install_gemdeps"
 
@@ -55,7 +56,7 @@ class TestGemCommandsInstallCommand < Gem::TestCase
     a2_pre = specs["a-2.a"]
 
     @cmd.handle_options [a2_pre.name, "--version", a2_pre.version.to_s,
-                         "--no-document"]
+                         "--no-document", "--no-conservative"]
     assert @cmd.options[:prerelease]
     assert @cmd.options[:version].satisfied_by?(a2_pre.version)
 

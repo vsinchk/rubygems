@@ -514,15 +514,15 @@ if you believe they were disclosed to a third party.
     assert_equal(false, @cfg.install_extension_in_lib)
   end
 
-  def util_config_file(args = @cfg_args)
-    @cfg = Gem::ConfigFile.new args
-  end
-
   def test_disable_default_gem_server
     File.open @temp_conf, "w" do |fp|
       fp.puts ":disable_default_gem_server: true"
     end
     util_config_file
     assert_equal(true, @cfg.disable_default_gem_server)
+  end
+
+  def util_config_file(args = @cfg_args)
+    @cfg = Gem::ConfigFile.new args
   end
 end

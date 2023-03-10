@@ -111,6 +111,7 @@ class Gem::Specification < Gem::BasicSpecification
 
   DEFAULT_GEMS_LIST = %w[
     bigdecimal
+    bundler
     cmath
     csv
     date
